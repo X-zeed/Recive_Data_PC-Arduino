@@ -1,9 +1,9 @@
 import serial
 
 # เปลี่ยน COM ให้ตรงกับของคุณ
-ser = serial.Serial("COM7", 9600, timeout=1)
+ser = serial.Serial("COM10", 9600, timeout=1)
 
-print("Connected to ESP8266...")
+print("Connected to ESP32-C3...")
 
 while True:
     if ser.in_waiting > 0:
