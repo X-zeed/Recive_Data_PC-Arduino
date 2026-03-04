@@ -12,27 +12,35 @@ void loop() {
 
   if (Serial1.available()) {
 
-    String data = Serial1.readStringUntil('\n');  // อ่านทีละบรรทัด
-    data.trim();  // ลบช่งว่างหัวท้าย
+    String data = Serial1.readStringUntil('\n');
+    data.trim();
 
-//    Serial.println("Raw Data: " + data);
+    Serial.println("Raw Data: " + data);
 
-    // แยกเอาค่าก่อนเครื่องหมาย comma
     int commaIndex = data.indexOf(',');
 
     if (commaIndex > 0) {
 
+      // ค่า measurement
       String shoeValue = data.substring(0, commaIndex);
 
-      shoeValue.replace("\"", "");  // ลบเครื่องหมาย "
-      shoeValue.trim();             // ลบ space
+      // ค่า status
+      String statusValue = data.substring(commaIndex + 1);
+
+      shoeValue.replace("\"", "");
+      shoeValue.trim();
+
+      statusValue.replace("\"", "");
+      statusValue.trim();
 
       float shoe = shoeValue.toFloat();
 
-      // แสดงผลแบบ JSON
+      // JSON Output
       Serial.print("{\"shoe\":");
       Serial.print(shoe);
-      Serial.println("}");
+      Serial.print(",\"status\":\"");
+      Serial.print(statusValue);
+      Serial.println("\"}");
     }
   }
 }
